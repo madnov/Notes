@@ -102,44 +102,57 @@ if __name__ == '__main__':
     notes = Notes('notes.json')
 
     while True:
-        print("Select command:")
-        print("1. Add")
-        print("2. Edit")
-        print("3. Delete")
-        print("4. Get")
-        print("5. List")
-        print("6. Filter by date")
-        print("7. Exit")
+        print("Выберите команду:")
+        print("1. Добавить заметку")
+        print("2. Изменить заметку")
+        print("3. Удалить заметку")
+        print("4. Получить заметку по №")
+        print("5. Вывести список всех заметок")
+        print("6. Фильтрация заметок по дате создания")
+        print("7. Выход")
 
-        choice = input("Enter choice: ")
+        choice = input("Введите команду: ")
 
         if choice == '1':
-            title = input("Enter title: ")
-            body = input("Enter body: ")
+            title = input("Введите название: ")
+            body = input("Введите текст заметки: ")
             notes.add(title, body)
+            print("-----------------")
+            print("Заметка сохранена")
+            print("-----------------")
         elif choice == '2':
-            id = int(input("Enter id: "))
-            title = input("Enter new title (leave empty to skip): ")
-            body = input("Enter new body (leave empty to skip): ")
+            id = int(input("Выберете № заметки которую хотите изменить: "))
+            title = input("Введите новое название (Оставте пустым, если не хотите менять): ")
+            body = input("Введите новый текст заметки (Оставте пустым, если не хотите менять): ")
             notes.edit(id, title, body)
+            print("----------------")
+            print("Заметка изменена")
+            print("----------------")
         elif choice == '3':
-            id = int(input("Enter id: "))
+            id = int(input("Введите № заметки которую хотите удалить: "))
             notes.delete(id)
+            print("-------------------")
+            print(f"Заметка №{id} удалена")
+            print("-------------------")
         elif choice == '4':
-            id = int(input("Enter id: "))
+            id = int(input("Введите № заметки которую хотите вывести в консоль: "))
             note = notes.get(id)
             print(note)
         elif choice == '5':
+            print("------------------------")
             notes.list_notes()
+            print("------------------------")
         elif choice == '6':
-            start_date_str = input("Enter start date (YYYY-MM-DD): ")
-            end_date_str = input("Enter end date (YYYY-MM-DD): ")
+            start_date_str = input("Введите дату начала фильтрации заметок (ГГГГ-ММ-ДД): ")
+            end_date_str = input("Введите дату окончания фильтрации заметок (ГГГГ-ММ-ДД): ")
             start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date() if start_date_str else None
             end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date() if end_date_str else None
             filtered_notes = notes.filter_by_date(start_date, end_date)
+            print("------------------------")
             for note in filtered_notes:
                 print(note)
+            print("------------------------")
         elif choice == '7':
             break
         else:
-            print("Invalid choice")
+            print("Неправильный выбор!!!")
